@@ -463,6 +463,13 @@ public class PostContentActivity extends FragmentActivity implements LoaderManag
         protected Integer doInBackground(String... params) {
             int statusCode = 0;
             String noticetrimstr;
+            String content = "";
+            if (posts.get(Integer.valueOf(params[2]) - 1).content.startsWith("%%%%%")) {
+                content = posts.get(Integer.valueOf(params[2]) - 1).content.substring("%%%%%".length());
+            } else {
+                String[] temp = posts.get(Integer.valueOf(params[2]) - 1).content.split("%%%%%");
+                content = temp[1];
+            }
             noticetrimstr = "[quote][size=2][url=forum.php?mod=redirect&goto=findpost&pid="
                     + posts.get(Integer.valueOf(params[2]) - 1).pid
                     + "&tid="
@@ -471,7 +478,7 @@ public class PostContentActivity extends FragmentActivity implements LoaderManag
                     + posts.get(Integer.valueOf(params[2]) - 1).author
                     + posts.get(Integer.valueOf(params[2]) - 1).time
                     + "[/color][/url][/size] "
-                    + posts.get(Integer.valueOf(params[2]) - 1).content
+                    + content
                     + "[/quote]";
 
             HashMap<String, String> datas = new HashMap<String, String>();
